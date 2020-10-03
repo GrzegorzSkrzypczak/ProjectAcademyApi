@@ -1,7 +1,5 @@
 package pl.sdaacademy.pokemonacademyapi.app_loader.repository;
 
-import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 
 public class PokemonReponse {
