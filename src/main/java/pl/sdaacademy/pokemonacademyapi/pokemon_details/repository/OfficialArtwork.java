@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OfficialArtwork {
 
-    private String front_default;
+    @JsonProperty("front_default")
+    private String image;
 
-    public void setFront_default(String front_default) {
-        this.front_default = front_default;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getFront_default() {
-        return front_default;
+    public String getImage() {
+        return image;
     }
 }

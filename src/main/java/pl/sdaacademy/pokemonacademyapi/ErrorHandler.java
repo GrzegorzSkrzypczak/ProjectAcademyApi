@@ -10,7 +10,7 @@ import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.NoPokemonFoundExc
 public class ErrorHandler {
 
     @ExceptionHandler(value = NoPokemonFoundException.class)
-    public ResponseEntity<Object>  noSuchElementException(NoPokemonFoundException e) {
-        return  new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Object> noSuchElementException(NoPokemonFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

@@ -11,24 +11,24 @@ public class PokemonDetailsReponse {
     private String name;
 
     @JsonProperty("abilities")
-    List<AbilitiesDetails> abilitiesList;
+    private List<AbilitiesDetails> abilitiesList;
 
-    private int hight;
+    private int height;
     private int weight;
 
     @JsonProperty("types")
-    List<Types> types;
+    private List<Types> types;
 
     @JsonProperty("sprites")
-    Sprites sprites;
+    private Sprites sprites;
 
     public PokemonDetailsReponse() {
     }
 
     public PokemonDetailsReponse(String name, List<AbilitiesDetails> abilitiesList, int hight, int waight, List<Types> types, Sprites sprites) {
-        this.name =  name;
+        this.name = name;
         this.abilitiesList = abilitiesList;
-        this.hight = hight;
+        this.height = hight;
         this.weight = waight;
         this.types = types;
         this.sprites = sprites;
@@ -50,12 +50,12 @@ public class PokemonDetailsReponse {
         this.abilitiesList = abilitiesList;
     }
 
-    public int getHight() {
-        return hight;
+    public int getHeight() {
+        return height;
     }
 
-    public void setHight(int hight) {
-        this.hight = hight;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getWeight() {
