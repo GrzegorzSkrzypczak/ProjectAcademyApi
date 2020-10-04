@@ -3,7 +3,11 @@ package pl.sdaacademy.pokemonacademyapi.app_loader.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.sdaacademy.pokemonacademyapi.app_loader.repository.*;
+import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokeapiRepository;
+import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokemonReponse;
+import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokemonResult;
+import pl.sdaacademy.pokemonacademyapi.common.repository.Pokemon;
+import pl.sdaacademy.pokemonacademyapi.common.repository.PokemonRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;

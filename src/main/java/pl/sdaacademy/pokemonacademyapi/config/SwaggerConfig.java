@@ -1,4 +1,4 @@
-package pl.sdaacademy.pokemonacademyapi;
+package pl.sdaacademy.pokemonacademyapi.config;
 
 
 import org.springframework.context.annotation.Bean;

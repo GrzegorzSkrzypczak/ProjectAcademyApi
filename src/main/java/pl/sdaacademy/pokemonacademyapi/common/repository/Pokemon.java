@@ -1,4 +1,4 @@
-package pl.sdaacademy.pokemonacademyapi.app_loader.repository;
+package pl.sdaacademy.pokemonacademyapi.common.repository;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

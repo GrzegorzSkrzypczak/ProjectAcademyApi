@@ -1,7 +1,10 @@
-package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository;
+package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Repository;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.ability.AbilitiesDetails;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.image.Sprites;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.type.Types;
 
 import java.util.List;
 
@@ -25,7 +28,8 @@ public class PokemonDetailsReponse {
     public PokemonDetailsReponse() {
     }
 
-    public PokemonDetailsReponse(String name, List<AbilitiesDetails> abilitiesList, int hight, int waight, List<Types> types, Sprites sprites) {
+    public PokemonDetailsReponse(String name, List<AbilitiesDetails> abilitiesList,
+                                 int hight, int waight, List<Types> types, Sprites sprites) {
         this.name = name;
         this.abilitiesList = abilitiesList;
         this.height = hight;

@@ -1,4 +1,4 @@
-package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository;
+package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class PokemonDetailsRepository {
         this.restTemplate = restTemplate;
     }
 
-    public PokemonDetailsReponse getPokemonDetailsReponse (String url){
+    public PokemonDetailsReponse getPokemonDetailsReponse(String url) {
         return restTemplate.getForObject(url, PokemonDetailsReponse.class);
     }
 }

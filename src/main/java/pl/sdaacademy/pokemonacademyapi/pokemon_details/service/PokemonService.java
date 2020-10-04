@@ -2,11 +2,12 @@ package pl.sdaacademy.pokemonacademyapi.pokemon_details.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sdaacademy.pokemonacademyapi.app_loader.repository.Pokemon;
-import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokemonRepository;
+import pl.sdaacademy.pokemonacademyapi.common.repository.Pokemon;
+import pl.sdaacademy.pokemonacademyapi.common.repository.PokemonRepository;
+import pl.sdaacademy.pokemonacademyapi.common.service.NoPokemonFoundException;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
-import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetailsReponse;
-import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetailsRepository;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsReponse;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
 
 import java.util.List;
 
@@ -39,8 +40,9 @@ public class PokemonService {
     }
 
     public PokemonDetails getPokemonDetails(String name) {
-        Pokemon pokemon = pokemonRepository.findByName(name).orElseThrow(()->
-        {throw  new NoPokemonFoundException(name);
+        Pokemon pokemon = pokemonRepository.findByName(name).orElseThrow(() ->
+        {
+            throw new NoPokemonFoundException(name);
         });
 
         PokemonDetailsReponse reponse = pokemonDetailRepository.getPokemonDetailsReponse(pokemon.getUrl());

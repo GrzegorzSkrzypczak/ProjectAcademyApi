@@ -1,4 +1,4 @@
-package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository;
+package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.ability;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

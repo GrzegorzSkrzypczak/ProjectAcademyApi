@@ -1,6 +1,6 @@
-package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository;
+package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.type;
 
-public class Ability {
+public class TypeDetails {
 
     private String name;
 
