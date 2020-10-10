@@ -6,8 +6,9 @@ import pl.sdaacademy.pokemonacademyapi.common.repository.Pokemon;
 import pl.sdaacademy.pokemonacademyapi.common.repository.PokemonRepository;
 import pl.sdaacademy.pokemonacademyapi.common.service.NoPokemonFoundException;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetailsRepository;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokeapiPokemonDetailsRepository;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsReponse;
-import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +19,16 @@ public class PokemonDetailService {
 
 
     private final PokemonRepository pokemonRepository;
-    private final PokemonDetailsRepository pokemonDetailRepository;
+    private final PokeapiPokemonDetailsRepository pokeapiPokemonDetailsRepository;
     private final PokemonDetailsTransformer pokemonDetailsTransformer;
+    private final PokemonDetailsRepository pokemonDetailsRepository;
 
     @Autowired
-    public PokemonDetailService(PokemonRepository pokemonRepository, PokemonDetailsRepository pokemonDetailRepository, PokemonDetailsTransformer pokemonDetailsTransformer) {
+    public PokemonDetailService(PokemonRepository pokemonRepository, PokeapiPokemonDetailsRepository pokeapiPokemonDetailsRepository, PokemonDetailsTransformer pokemonDetailsTransformer, PokemonDetailsRepository pokemonDetailsRepository) {
         this.pokemonRepository = pokemonRepository;
-        this.pokemonDetailRepository = pokemonDetailRepository;
+        this.pokeapiPokemonDetailsRepository = pokeapiPokemonDetailsRepository;
         this.pokemonDetailsTransformer = pokemonDetailsTransformer;
+        this.pokemonDetailsRepository = pokemonDetailsRepository;
     }
 
     public List<Pokemon> getPokemons() {
@@ -47,22 +50,33 @@ public class PokemonDetailService {
             throw new NoPokemonFoundException(name);
         });
 
-        PokemonDetailsReponse reponse = pokemonDetailRepository.getPokemonDetailsReponse(pokemon.getUrl());
-        return pokemonDetailsTransformer.transformToPokemon(reponse);
+        PokemonDetailsReponse reponse = pokeapiPokemonDetailsRepository.getPokemonDetailsReponse(pokemon.getUrl());
+        PokemonDetails pokemonDetails = pokemonDetailsTransformer.transformToPokemon(reponse);
+        return pokemonDetailsRepository.findById(pokemonDetails.getName())
+                .orElseGet(() -> {
+                    return pokemonDetailsRepository.save(pokemonDetails);
+                });
+
 
     }
 
     public List<PokemonDetails> getMorePokemonsByName(List<String> pokemonNames) {
-        return pokemonNames.stream()
+        List<PokemonDetails> pokemonDetails = pokemonNames.stream()
                 .map(pokemonRepository::findByName)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(Pokemon::getUrl)
-                .map(pokemonDetailRepository::getPokemonDetailsReponse)
+                .map(pokeapiPokemonDetailsRepository::getPokemonDetailsReponse)
                 .map(pokemonDetailsTransformer::transformToPokemon)
                 .collect(Collectors.toList());
 
-        // wersja pierwotna:
+        pokemonDetails.forEach(this::savePokemonDetailsToRepo);
+        return pokemonDetails;
+
+    }
+
+
+    // wersja pierwotna:
 
         /*
         return pokemonNames.stream().map((String pokemonName)-> {
@@ -79,7 +93,11 @@ public class PokemonDetailService {
         }).collect(Collectors.toList());
          */
 
-
+    public void savePokemonDetailsToRepo(PokemonDetails details) {
+        pokemonDetailsRepository.findById(details.getName())
+                .orElseGet(() -> pokemonDetailsRepository.save(details));
     }
 
 }
+
+
