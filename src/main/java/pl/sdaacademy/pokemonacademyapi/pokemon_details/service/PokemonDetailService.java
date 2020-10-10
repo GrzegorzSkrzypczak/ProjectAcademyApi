@@ -9,10 +9,13 @@ import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsReponse;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class PokemonService {
+public class PokemonDetailService {
 
 
     private final PokemonRepository pokemonRepository;
@@ -20,7 +23,7 @@ public class PokemonService {
     private final PokemonDetailsTransformer pokemonDetailsTransformer;
 
     @Autowired
-    public PokemonService(PokemonRepository pokemonRepository, PokemonDetailsRepository pokemonDetailRepository, PokemonDetailsTransformer pokemonDetailsTransformer) {
+    public PokemonDetailService(PokemonRepository pokemonRepository, PokemonDetailsRepository pokemonDetailRepository, PokemonDetailsTransformer pokemonDetailsTransformer) {
         this.pokemonRepository = pokemonRepository;
         this.pokemonDetailRepository = pokemonDetailRepository;
         this.pokemonDetailsTransformer = pokemonDetailsTransformer;
@@ -49,4 +52,40 @@ public class PokemonService {
         return pokemonDetailsTransformer.transformToPokemon(reponse);
 
     }
+
+    public List<PokemonDetails> getMorePokemonsByName(List<String> pokemonNames) {
+        return pokemonNames.stream()
+                .map(name -> {
+                    return pokemonRepository.findByName(name);
+                })
+                .filter(optPokemon->optPokemon.isPresent())
+                .map(optPokemon->optPokemon.get())
+                .map(pokemon -> {
+                    return pokemonDetailRepository.getPokemonDetailsReponse(pokemon.getUrl());
+
+                })
+                .map(pokemonDetailsReponse -> {
+                    return pokemonDetailsTransformer.transformToPokemon(pokemonDetailsReponse);
+                }).collect(Collectors.toList());
+
+        // wersja pierwotna:
+
+        /*
+        return pokemonNames.stream().map((String pokemonName)-> {
+            return pokemonRepository.findByName(pokemonName);
+        }).filter((Optional<Pokemon> pokemonOptional)->{
+            return pokemonOptional.isPresent();
+        }).map((Optional<Pokemon> pokemonDetails)->{
+            return pokemonDetails.get();
+        }).map((Pokemon pokemon) ->{
+            return pokemonDetailsRepository
+                    .getPokemonDetailsResponse(pokemon.getUrl());
+        }).map((PokemonDetailsResponse pokemonDetailsResponse)->{
+            return pokemonDetailsTransformer.transformToPokemonDetails(pokemonDetailsResponse);
+        }).collect(Collectors.toList());
+         */
+
+
+    }
+
 }

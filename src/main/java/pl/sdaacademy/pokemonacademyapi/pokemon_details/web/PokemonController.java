@@ -2,27 +2,34 @@ package pl.sdaacademy.pokemonacademyapi.pokemon_details.web;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
-import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.PokemonService;
+import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.PokemonDetailService;
+
+import java.util.List;
 
 @RequestMapping("/pokemons")
 @RestController
 public class PokemonController {
 
-    private final PokemonService pokemonService;
+    private final PokemonDetailService pokemonDetailService;
 
 
     @Autowired
-    public PokemonController(PokemonService pokemonService) {
-        this.pokemonService = pokemonService;
+    public PokemonController(PokemonDetailService pokemonService) {
+        this.pokemonDetailService = pokemonService;
     }
 
     @GetMapping("/{name}")
     public PokemonDetails getPokemon(@PathVariable String name) {
-        return pokemonService.getPokemonDetails(name);
+        return pokemonDetailService.getPokemonDetails(name);
     }
+
+    @GetMapping
+    public List<PokemonDetails> getPokemons(@RequestParam List<String> pokemonNames) {
+        return pokemonDetailService.getMorePokemonsByName(pokemonNames);
+    }
+
+
+
 }

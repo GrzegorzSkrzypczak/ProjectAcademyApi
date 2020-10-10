@@ -14,7 +14,8 @@ public class PokemonDetails {
     public PokemonDetails() {
     }
 
-    public PokemonDetails(String name, List<String> ability, int hight, int waight, List<String> type, String image) {
+    public PokemonDetails(String name, List<String> ability,
+                          int hight, int waight, List<String> type, String image) {
         this.name = name;
         this.ability = ability;
         this.hight = hight;
