@@ -27,7 +27,7 @@ public class PokemonController {
 
     @GetMapping
     public List<PokemonDetails> getPokemons(@RequestParam List<String> pokemonNames) {
-        return pokemonDetailService.getMorePokemonsByName(pokemonNames);
+        return pokemonDetailService.getPokemonDetailsList(pokemonNames);
     }
 
 

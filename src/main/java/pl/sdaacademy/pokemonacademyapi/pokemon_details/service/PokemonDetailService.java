@@ -31,52 +31,29 @@ public class PokemonDetailService {
         this.pokemonDetailsRepository = pokemonDetailsRepository;
     }
 
-    public List<Pokemon> getPokemons() {
-        return pokemonRepository.findAll();
-    }
-
-    public Pokemon getPokemon(String name) {
-        return pokemonRepository
-                .findByName(name)
-                .stream().findAny()
-                .orElseThrow(() -> {
-                    throw new NoPokemonFoundException(name);
-                });
-    }
 
     public PokemonDetails getPokemonDetails(String name) {
+
         Pokemon pokemon = pokemonRepository.findByName(name).orElseThrow(() ->
         {
             throw new NoPokemonFoundException(name);
         });
 
-        PokemonDetailsReponse reponse = pokeapiPokemonDetailsRepository.getPokemonDetailsReponse(pokemon.getUrl());
-        PokemonDetails pokemonDetails = pokemonDetailsTransformer.transformToPokemon(reponse);
-        return pokemonDetailsRepository.findById(pokemonDetails.getName())
-                .orElseGet(() -> {
-                    return pokemonDetailsRepository.save(pokemonDetails);
-                });
-
-
+        return providePokemonDetails(pokemon);
     }
 
-    public List<PokemonDetails> getMorePokemonsByName(List<String> pokemonNames) {
+    public List<PokemonDetails> getPokemonDetailsList(List<String> pokemonNames) {
         List<PokemonDetails> pokemonDetails = pokemonNames.stream()
                 .map(pokemonRepository::findByName)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(Pokemon::getUrl)
-                .map(pokeapiPokemonDetailsRepository::getPokemonDetailsReponse)
-                .map(pokemonDetailsTransformer::transformToPokemon)
+                .map(this::providePokemonDetails)
                 .collect(Collectors.toList());
 
         pokemonDetails.forEach(this::savePokemonDetailsToRepo);
         return pokemonDetails;
 
-    }
-
-
-    // wersja pierwotna:
+        // wersja pierwotna:
 
         /*
         return pokemonNames.stream().map((String pokemonName)-> {
@@ -93,7 +70,27 @@ public class PokemonDetailService {
         }).collect(Collectors.toList());
          */
 
-    public void savePokemonDetailsToRepo(PokemonDetails details) {
+    }
+
+
+    private PokemonDetails providePokemonDetails(Pokemon pokemon) {
+        return pokemonDetailsRepository
+                .findById(pokemon.getName())
+                .orElseGet(()->{
+                    PokemonDetails pokemonDetails = getPokemonDetailsFromApi(pokemon.getUrl());
+                    savePokemonDetailsToRepo(pokemonDetails);
+                    return pokemonDetails;
+                });
+    }
+
+    private PokemonDetails getPokemonDetailsFromApi(String url) {
+        PokemonDetailsReponse response = pokeapiPokemonDetailsRepository
+                .getPokemonDetailsReponse(url);
+        return pokemonDetailsTransformer.transformToPokemon(response);
+    }
+
+
+    private void savePokemonDetailsToRepo(PokemonDetails details) {
         pokemonDetailsRepository.findById(details.getName())
                 .orElseGet(() -> pokemonDetailsRepository.save(details));
     }
