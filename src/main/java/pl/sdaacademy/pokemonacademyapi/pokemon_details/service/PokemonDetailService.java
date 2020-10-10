@@ -9,7 +9,6 @@ import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsReponse;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,18 +54,13 @@ public class PokemonDetailService {
 
     public List<PokemonDetails> getMorePokemonsByName(List<String> pokemonNames) {
         return pokemonNames.stream()
-                .map(name -> {
-                    return pokemonRepository.findByName(name);
-                })
-                .filter(optPokemon->optPokemon.isPresent())
-                .map(optPokemon->optPokemon.get())
-                .map(pokemon -> {
-                    return pokemonDetailRepository.getPokemonDetailsReponse(pokemon.getUrl());
-
-                })
-                .map(pokemonDetailsReponse -> {
-                    return pokemonDetailsTransformer.transformToPokemon(pokemonDetailsReponse);
-                }).collect(Collectors.toList());
+                .map(pokemonRepository::findByName)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Pokemon::getUrl)
+                .map(pokemonDetailRepository::getPokemonDetailsReponse)
+                .map(pokemonDetailsTransformer::transformToPokemon)
+                .collect(Collectors.toList());
 
         // wersja pierwotna:
 
