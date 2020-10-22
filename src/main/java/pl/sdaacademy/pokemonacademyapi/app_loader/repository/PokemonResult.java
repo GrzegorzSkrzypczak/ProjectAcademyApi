@@ -1,6 +1,7 @@
 package pl.sdaacademy.pokemonacademyapi.app_loader.repository;
 
 public class PokemonResult {
+
     private String name;
     private String url;
 

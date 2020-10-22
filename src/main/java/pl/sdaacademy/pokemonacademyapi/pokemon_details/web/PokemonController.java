@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.PokemonDetailService;
+import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository.PokemonListItem;
+import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.service.PokemonListService;
 
 import java.util.List;
 
@@ -13,11 +15,13 @@ import java.util.List;
 public class PokemonController {
 
     private final PokemonDetailService pokemonDetailService;
+    private final PokemonListService pokemonListService;
 
 
     @Autowired
-    public PokemonController(PokemonDetailService pokemonService) {
+    public PokemonController(PokemonDetailService pokemonService, PokemonListService pokemonListService) {
         this.pokemonDetailService = pokemonService;
+        this.pokemonListService = pokemonListService;
     }
 
     @GetMapping("/{name}")
@@ -28,6 +32,11 @@ public class PokemonController {
     @GetMapping
     public List<PokemonDetails> getPokemons(@RequestParam List<String> pokemonNames) {
         return pokemonDetailService.getPokemonDetailsList(pokemonNames);
+    }
+
+    @GetMapping("/list")
+    public List<PokemonListItem> getPokemonList() {
+        return pokemonListService.getPokemonListItem();
     }
 
 

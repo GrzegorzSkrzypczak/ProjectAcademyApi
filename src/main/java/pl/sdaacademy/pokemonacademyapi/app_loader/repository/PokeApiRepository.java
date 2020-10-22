@@ -5,12 +5,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 @Repository
-public class PokeapiRepository {
+public class PokeApiRepository {
 
     private final String urlAddress;
     private final RestTemplate restTemplate;
 
-    public PokeapiRepository(@Value("${pokeapi.url.address}") String urlAddress, RestTemplate restTemplate) {
+    public PokeApiRepository(@Value("${pokeapi.url.address}") String urlAddress, RestTemplate restTemplate) {
         this.urlAddress = urlAddress;
         this.restTemplate = restTemplate;
     }

@@ -3,7 +3,7 @@ package pl.sdaacademy.pokemonacademyapi.app_loader.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokeapiRepository;
+import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokeApiRepository;
 import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokemonReponse;
 import pl.sdaacademy.pokemonacademyapi.app_loader.repository.PokemonResult;
 import pl.sdaacademy.pokemonacademyapi.common.repository.Pokemon;
@@ -17,13 +17,13 @@ import java.util.List;
 public class PokemonLoadService {
 
     private final PokemonRepository pokemonRepository;
-    private final PokeapiRepository pokeapiRepository;
+    private final PokeApiRepository pokeapiRepository;
     private final PokemonTransformer pokemonTransformer;
     private final int startOffset;
     private final int limiter;
 
     @Autowired
-    public PokemonLoadService(PokemonRepository pokemonRepository, PokeapiRepository pokeapiRepository,
+    public PokemonLoadService(PokemonRepository pokemonRepository, PokeApiRepository pokeapiRepository,
                               PokemonTransformer pokemonTransformer,
                               @Value("${pokeapi.star_offset}") int startOffset,
                               @Value("${pokeapi.limit}") int limiter) {

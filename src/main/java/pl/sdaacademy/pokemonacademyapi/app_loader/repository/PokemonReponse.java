@@ -19,10 +19,6 @@ public class PokemonReponse {
         this.next = next;
     }
 
-    public List<PokemonResult> getResults() {
-        return results;
-    }
-
     public void setResults(List<PokemonResult> results) {
         this.results = results;
     }
