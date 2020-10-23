@@ -32,15 +32,15 @@ public class PokemonDetailService {
     }
 
 
-    public PokemonDetails getPokemonDetails(String name) {
-
-        Pokemon pokemon = pokemonRepository.findByName(name).orElseThrow(() ->
-        {
-            throw new NoPokemonFoundException(name);
-        });
-
-        return providePokemonDetails(pokemon);
-    }
+//    public PokemonDetails getPokemonDetails(String name) {
+//
+//        Pokemon pokemon = pokemonRepository.findByName(name).orElseThrow(() ->
+//        {
+//            throw new NoPokemonFoundException(name);
+//        });
+//
+//        return providePokemonDetails(pokemon);
+//    }
 
     public List<PokemonDetails> getPokemonDetailsList(List<String> pokemonNames) {
         List<PokemonDetails> pokemonDetails = pokemonNames.stream()
