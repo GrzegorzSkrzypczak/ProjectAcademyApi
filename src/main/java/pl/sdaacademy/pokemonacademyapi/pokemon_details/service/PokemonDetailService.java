@@ -76,7 +76,7 @@ public class PokemonDetailService {
     private PokemonDetails providePokemonDetails(Pokemon pokemon) {
         return pokemonDetailsRepository
                 .findById(pokemon.getName())
-                .orElseGet(()->{
+                .orElseGet(() -> {
                     PokemonDetails pokemonDetails = getPokemonDetailsFromApi(pokemon.getUrl());
                     savePokemonDetailsToRepo(pokemonDetails);
                     return pokemonDetails;

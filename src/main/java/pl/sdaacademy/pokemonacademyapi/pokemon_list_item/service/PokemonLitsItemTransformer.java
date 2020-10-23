@@ -9,7 +9,7 @@ public class PokemonLitsItemTransformer {
 
     public PokemonListItem transformToPokemonListItem(PokemonListItemResponse pokemonListItemResponse) {
         String name = pokemonListItemResponse.getName();
-        int lvl =  pokemonListItemResponse.getBaseExperience();
+        int lvl = pokemonListItemResponse.getBaseExperience();
         String imageUrl = pokemonListItemResponse.getImages().getFrontDefault();
         return new PokemonListItem(name, lvl, imageUrl);
 

@@ -7,11 +7,11 @@ public class OfficialArtwork {
     @JsonProperty("front_default")
     private String image;
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getImage() {
         return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

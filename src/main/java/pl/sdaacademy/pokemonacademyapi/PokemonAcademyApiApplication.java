@@ -13,4 +13,5 @@ public class PokemonAcademyApiApplication {
         SpringApplication.run(PokemonAcademyApiApplication.class, args);
     }
 
+
 }

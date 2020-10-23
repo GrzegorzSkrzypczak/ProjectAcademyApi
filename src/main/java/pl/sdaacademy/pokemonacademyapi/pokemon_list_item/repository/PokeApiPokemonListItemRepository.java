@@ -3,7 +3,6 @@ package pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
-import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.pokeapi.PokemonDetailsReponse;
 
 @Repository
 public class PokeApiPokemonListItemRepository {

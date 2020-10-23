@@ -11,12 +11,12 @@ public class PokemonReponse {
         return next;
     }
 
-    public List<PokemonResult> getResult() {
-        return results;
-    }
-
     public void setNext(String next) {
         this.next = next;
+    }
+
+    public List<PokemonResult> getResult() {
+        return results;
     }
 
     public void setResults(List<PokemonResult> results) {

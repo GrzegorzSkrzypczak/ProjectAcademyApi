@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.PokemonDetailService;
-import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository.PokemonListItem;
+import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository.PokemonList;
 import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.service.PokemonListService;
 
 import java.util.List;
@@ -35,10 +35,11 @@ public class PokemonController {
     }
 
     @GetMapping("/list")
-    public List<PokemonListItem> getPokemonList() {
-        return pokemonListService.getPokemonListItem();
-    }
+    public PokemonList getPokemonList(@RequestParam(defaultValue = "1") int page
+            , @RequestParam(defaultValue = "10") int size) {
 
+        return pokemonListService.getPokemonList(page, size);
+    }
 
 
 }

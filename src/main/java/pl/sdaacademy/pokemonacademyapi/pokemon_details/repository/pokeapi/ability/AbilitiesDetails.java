@@ -7,12 +7,11 @@ public class AbilitiesDetails {
     @JsonProperty("ability")
     private Ability ability;
 
+    public Ability getAbility() {
+        return ability;
+    }
 
     public void setAbility(Ability ability) {
         this.ability = ability;
-    }
-
-    public Ability getAbility() {
-        return ability;
     }
 }
