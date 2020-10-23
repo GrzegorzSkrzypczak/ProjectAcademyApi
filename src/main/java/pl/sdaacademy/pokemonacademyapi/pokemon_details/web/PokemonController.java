@@ -24,10 +24,10 @@ public class PokemonController {
         this.pokemonListService = pokemonListService;
     }
 
-//    @GetMapping("/{name}")
-//    public PokemonDetails getPokemon(@PathVariable String name) {
-//        return pokemonDetailService.getPokemonDetails(name);
-//    }
+    @GetMapping("/{name}")
+    public PokemonDetails getPokemon(@PathVariable String name) {
+        return pokemonDetailService.getPokemonDetails(name);
+    }
 
     @GetMapping
     public List<PokemonDetails> getPokemons(@RequestParam List<String> pokemonNames) {
