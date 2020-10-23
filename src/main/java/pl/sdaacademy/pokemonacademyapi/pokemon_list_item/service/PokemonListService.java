@@ -1,6 +1,7 @@
 package pl.sdaacademy.pokemonacademyapi.pokemon_list_item.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,15 +21,18 @@ public class PokemonListService {
     private final PokemonRepository pokemonRepository;
     private final PokemonLitsItemTransformer pokemonLitsItemTransformer;
     private final PokeApiPokemonListItemRepository pokeApiPokemonListItemRepository;
+    private final String pagingUrl;
 
 
     @Autowired
     public PokemonListService(PokemonRepository pokemonRepository,
                               PokeApiPokemonListItemRepository pokeApiPokemonListItemRepository,
-                              PokemonLitsItemTransformer pokemonLitsItemTransformer) {
+                              PokemonLitsItemTransformer pokemonLitsItemTransformer,
+                              @Value("${paa.paging.url}") String pagingUrl) {
         this.pokemonRepository = pokemonRepository;
         this.pokeApiPokemonListItemRepository = pokeApiPokemonListItemRepository;
         this.pokemonLitsItemTransformer = pokemonLitsItemTransformer;
+        this.pagingUrl = pagingUrl;
     }
 
 
@@ -53,7 +57,7 @@ public class PokemonListService {
 
 
         if (page < totalPages) {
-            next = String.format("http://localhost:8080/pokemons/list?page=%d&size=%d", page + 1, size);
+            next = String.format(pagingUrl, page + 1, size);
         }
         return next;
 
@@ -65,7 +69,7 @@ public class PokemonListService {
         String prev = null;
 
         if (page > 1) {
-            prev = String.format("http://localhost:8080/pokemons/list?page=%d&size=%d", page - 1, size);
+            prev = String.format(pagingUrl, page - 1, size);
         }
         return prev;
     }
