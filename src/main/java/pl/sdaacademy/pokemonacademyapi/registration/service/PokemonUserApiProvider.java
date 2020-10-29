@@ -24,7 +24,7 @@ public class PokemonUserApiProvider implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        PokemonApiUser pokemonApiUser = pokemonApiUserRepository.findById(username).orElseThrow(() -> {
+        PokemonApiUser pokemonApiUser = pokemonApiUserRepository.findById(username).<UserNotFoundException>orElseThrow(() -> {
             throw new UserNotFoundException(username);
         });
         return new User(pokemonApiUser.getLogin(), pokemonApiUser.getPassword(), Collections.emptyList());
