@@ -54,7 +54,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       pokemonUserOptional.orElseThrow(() -> {
+       pokemonUserOptional.<UserNotFoundException>orElseThrow(() -> {
            throw new UserNotFoundException("no user to authenticate");
        });
         PokemonApiUser pokemonApiUser = pokemonUserOptional.get();
