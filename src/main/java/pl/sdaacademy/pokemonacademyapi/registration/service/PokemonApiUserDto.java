@@ -4,11 +4,11 @@ public class PokemonApiUserDto {
 
     private String userName;
 
-    public PokemonApiUserDto(String userName) {
-        this.userName = userName;
+    public PokemonApiUserDto() {
     }
 
-    public PokemonApiUserDto() {
+    public PokemonApiUserDto(String userName) {
+        this.userName = userName;
     }
 
     public String getUserName() {

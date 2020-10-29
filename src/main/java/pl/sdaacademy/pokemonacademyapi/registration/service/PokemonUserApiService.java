@@ -9,7 +9,6 @@ import pl.sdaacademy.pokemonacademyapi.registration.repository.PokemonApiUserRep
 @Service
 public class PokemonUserApiService {
 
-    //TODO password encoder bean!
     private final PasswordEncoder passwordEncoder;
     private final PokemonApiUserRepository pokemonApiUserRepository;
 
@@ -20,16 +19,16 @@ public class PokemonUserApiService {
         this.pokemonApiUserRepository = pokemonApiUserRepository;
     }
 
-    public PokemonApiUser getPokemonUserByLogin(String login) {
+    public PokemonApiUser getPokemonApiUserByLogin(String login) {
        return pokemonApiUserRepository.findById(login)
                 .orElseThrow(() -> {
-                    throw new UserNotFoundException(String.format("User witch %s could not be found", login));
+                    throw new UserNotFoundException(String.format("User witch %s could not be found in db", login));
                 });
     }
 
     public PokemonApiUserDto addUser(PokemonApiUser pokemonApiUser) {
         pokemonApiUserRepository.findById(pokemonApiUser.getLogin()).ifPresent((user) -> {
-            throw new UserAllreadyExistsInDatabaseException(String.format("User with %s is already exist in db!",
+            throw new UserAllreadyExistsInDatabaseException(String.format("User with %s is already existing in db!",
                     pokemonApiUser.getLogin()));
         });
 
