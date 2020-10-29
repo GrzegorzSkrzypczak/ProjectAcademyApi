@@ -28,28 +28,36 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private static final long TOKEN_EXPIRATION_TIME = 3_600_000;
     private final AuthenticationManager authenticationManager;
     private final String securityKey;
+    private final String authorizationHeaderName;
+    private final String authorizationType;
 
-    @Autowired
-    public AuthenticationFilter(AuthenticationManager authenticationManager, @Value("${paa.secret_key}")String securityKey) {
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager,
+                                String securityKey,
+                                String authorizationType,
+                                String authorizationHeaderName) {
         this.authenticationManager = authenticationManager;
         this.securityKey = securityKey;
+        this.authorizationHeaderName = authorizationHeaderName;
+        this.authorizationType = authorizationType;
         setFilterProcessesUrl("/pokemons/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        Optional<PokemonApiUser> pokemonuserOptional = Optional.empty();
+        Optional<PokemonApiUser> pokemonUserOptional = Optional.empty();
 
         try {
-            pokemonuserOptional = Optional.ofNullable(new ObjectMapper().readValue(request.getInputStream(), PokemonApiUser.class));
+            pokemonUserOptional = Optional.ofNullable(new ObjectMapper().readValue(request.getInputStream(),
+                    PokemonApiUser.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
-       pokemonuserOptional.orElseThrow(() -> {
-           throw new UserNotFoundException("no user to authentiocate");
+       pokemonUserOptional.orElseThrow(() -> {
+           throw new UserNotFoundException("no user to authenticate");
        });
-        PokemonApiUser pokemonApiUser = pokemonuserOptional.get();
+        PokemonApiUser pokemonApiUser = pokemonUserOptional.get();
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(pokemonApiUser.getLogin(),
                 pokemonApiUser.getPassword(),
                 Collections.emptyList()));
@@ -62,9 +70,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) throws IOException, ServletException {
        String token = Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-                .setSubject(((User)authResult).getUsername())
+                .setSubject(((User)authResult.getPrincipal()).getUsername())
                 .signWith(SignatureAlgorithm.HS512, securityKey.getBytes())
                 .compact();
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader(authorizationHeaderName, authorizationType + " " + token);
     }
 }

@@ -13,13 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-public class AutherizationFilter extends BasicAuthenticationFilter {
+public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     private final String authorizationHeaderName;
     private final String authorizationType;
     private final String securityKey;
 
-    public AutherizationFilter(AuthenticationManager authenticationManager, String authorizationHeaderName, String authorizationType, String securityKey) {
+    public AuthorizationFilter(String securityKey,
+                               String authorizationHeaderName,
+                               String authorizationType,
+                               AuthenticationManager authenticationManager) {
         super(authenticationManager);
         this.authorizationHeaderName = authorizationHeaderName;
         this.authorizationType = authorizationType;
@@ -29,7 +32,7 @@ public class AutherizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(authorizationHeaderName);
-        if(header == null || header.startsWith(authorizationType)){
+        if(header == null || !header.startsWith(authorizationType)){
             chain.doFilter(request, response);
             return;
         }
