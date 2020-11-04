@@ -9,11 +9,11 @@ import java.util.List;
 public class PokemonDetails {
 
     @ElementCollection
-    private List<String> ability;
+    private List<String> abilities;
     @ElementCollection
-    private List<String> type;
-    private int hight;
-    private int waight;
+    private List<String> types;
+    private int height;
+    private int weight;
     private String image;
     @Id
     private String name;
@@ -24,10 +24,10 @@ public class PokemonDetails {
     public PokemonDetails(String name, List<String> ability,
                           int hight, int waight, List<String> type, String image) {
         this.name = name;
-        this.ability = ability;
-        this.hight = hight;
-        this.waight = waight;
-        this.type = type;
+        this.abilities = ability;
+        this.height = hight;
+        this.weight = waight;
+        this.types = type;
         this.image = image;
     }
 
@@ -39,36 +39,36 @@ public class PokemonDetails {
         this.name = name;
     }
 
-    public List<String> getAbility() {
-        return ability;
+    public List<String> getAbilities() {
+        return abilities;
     }
 
-    public void setAbility(List<String> ability) {
-        this.ability = ability;
+    public void setAbilities(List<String> ability) {
+        this.abilities = ability;
     }
 
-    public int getHight() {
-        return hight;
+    public int getHeight() {
+        return height;
     }
 
-    public void setHight(int hight) {
-        this.hight = hight;
+    public void setHeight(int hight) {
+        this.height = hight;
     }
 
-    public int getWaight() {
-        return waight;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setWaight(int waight) {
-        this.waight = waight;
+    public void setWeight(int waight) {
+        this.weight = waight;
     }
 
-    public List<String> getType() {
-        return type;
+    public List<String> getTypes() {
+        return types;
     }
 
-    public void setType(List<String> type) {
-        this.type = type;
+    public void setTypes(List<String> type) {
+        this.types = type;
     }
 
     public String getImage() {
