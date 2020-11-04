@@ -1,5 +1,7 @@
 package pl.sdaacademy.pokemonacademyapi.pokemon_details.repository;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ public class PokemonDetails {
     private List<String> types;
     private int height;
     private int weight;
+    @JsonProperty("sprites")
     private String image;
     @Id
     private String name;
