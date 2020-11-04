@@ -1,9 +1,12 @@
 package pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PokemonListItem {
 
     private String name;
+    @JsonProperty("base_experience")
     private int lvl;
     private String imageUrl;
 
