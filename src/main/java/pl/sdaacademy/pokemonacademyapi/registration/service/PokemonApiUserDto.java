@@ -2,20 +2,30 @@ package pl.sdaacademy.pokemonacademyapi.registration.service;
 
 public class PokemonApiUserDto {
 
-    private String userName;
+    private String login;
+    private String password;
 
     public PokemonApiUserDto() {
     }
 
-    public PokemonApiUserDto(String userName) {
-        this.userName = userName;
+    public PokemonApiUserDto(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

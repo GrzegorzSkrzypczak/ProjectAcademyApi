@@ -34,7 +34,7 @@ public class PokemonUserApiService {
 
         pokemonApiUser.setPassword(passwordEncoder.encode(pokemonApiUser.getPassword()));
         PokemonApiUser addedUser = pokemonApiUserRepository.save(pokemonApiUser);
-        return new PokemonApiUserDto(addedUser.getLogin());
+        return new PokemonApiUserDto(addedUser.getLogin(), addedUser.getPassword());
     }
 
 }
