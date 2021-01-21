@@ -9,7 +9,7 @@ Fallow this 3 easy steps:
 https://pokemon-academi-api-grzegorz.herokuapp.com/pokemons/signup
 
 - in section Body select "raw", at the end right side press "text" and select "JSON"
-- in empty window bellow type:
+- in empty window bellow type (this is only example you can type whatever login and passwor You want):
 
 {
     "login": "test@test.pl",
