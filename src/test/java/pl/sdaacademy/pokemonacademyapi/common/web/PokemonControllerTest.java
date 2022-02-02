@@ -16,17 +16,20 @@ import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.service.PokemonListServ
 import pl.sdaacademy.pokemonacademyapi.registration.service.PokemonUserApiService;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-class PokemonControllerTest {
+public class PokemonControllerTest {
+
+    private static final String PIKATCHU = "Pikatchu";
+    private static final String CHARLIZARD = "Charlizard";
 
     @Mock
     private PokemonDetailService pokemonDetailService;
-    @InjectMocks
+    @Mock
     private PokemonListService pokemonListService;
     @Mock
     private PokemonUserApiService pokemonUserApiService;
@@ -41,7 +44,7 @@ class PokemonControllerTest {
     }
 
     @Test
-    void getPokemon() {
+    public void getPokemon() {
 
         pokemonController =
                 new PokemonController(pokemonDetailService,pokemonListService,pokemonUserApiService);
@@ -52,10 +55,10 @@ class PokemonControllerTest {
         typeList.add("grass");
 
         Pokemon pokemon = new Pokemon();
-        pokemon.setName("Pikatchu");
+        pokemon.setName(PIKATCHU);
         String pokemonName = pokemon.getName();
 
-        pokemonDetails = getPokemonDetails("Pikatchu",10,
+        pokemonDetails = getPokemonDetails(PIKATCHU,10,
                 20,"testImage", abilitiesList,typeList);
 
         when(pokemonController.getPokemon(pokemonName)).thenReturn(pokemonDetails);
@@ -64,20 +67,53 @@ class PokemonControllerTest {
         String name = pokemon1.getName();
 
         Assertions.assertEquals(pokemonName, name);
-        Assertions.assertNotEquals("Charlizard",name);
+        Assertions.assertNotEquals(CHARLIZARD,name);
 
     }
 
     @Test
-    void getPokemons() {
+    public void getPokemons() {
+        pokemonController =
+                new PokemonController(pokemonDetailService,pokemonListService,pokemonUserApiService);
+
+        List<String> pikatchuAbilitiesList = new ArrayList<>();
+        pikatchuAbilitiesList.add("Thunder");
+        List<String> pikatchuTypeList = new ArrayList<>();
+        pikatchuAbilitiesList.add("grass");
+
+        List<String> charlizardAbilitiesList = new ArrayList<>();
+        charlizardAbilitiesList.add("Thunder");
+        List<String> charlizardTypeList = new ArrayList<>();
+        charlizardTypeList.add("grass");
+
+        PokemonDetails pikatchuDetails = getPokemonDetails(PIKATCHU,10,20
+                ,"pic",pikatchuAbilitiesList, pikatchuTypeList);
+
+        PokemonDetails charlizardDetails = getPokemonDetails(CHARLIZARD,30,60
+                ,"pic",charlizardAbilitiesList, charlizardTypeList);
+
+        List<PokemonDetails> pokemonDetailsList = new LinkedList<PokemonDetails>();
+        pokemonDetailsList.add(pikatchuDetails);
+        pokemonDetailsList.add(charlizardDetails);
+
+        List<String> pokemonNamesList = new LinkedList<>();
+        pokemonNamesList.add(PIKATCHU);
+        pokemonNamesList.add(CHARLIZARD);
+
+        when(pokemonController.getPokemons(pokemonNamesList)).thenReturn(pokemonDetailsList);
+
+        List<PokemonDetails> pokemonsResult = pokemonController.getPokemons(pokemonNamesList);
+        Assertions.assertEquals(2,pokemonsResult.size());
+        Assertions.assertEquals(pokemonsResult.get(0).getName(), PIKATCHU);
+        Assertions.assertEquals(pokemonsResult.get(1).getName(), CHARLIZARD);
     }
 
     @Test
-    void getPokemonList() {
+    public void getPokemonList() {
     }
 
     @Test
-    void addUser() {
+    public void addUser() {
     }
 
     private PokemonDetails getPokemonDetails(String name, int height, int weight
