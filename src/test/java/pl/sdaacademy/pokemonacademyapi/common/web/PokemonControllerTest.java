@@ -7,7 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import pl.sdaacademy.pokemonacademyapi.common.repository.Pokemon;
+import pl.sdaacademy.pokemonacademyapi.common.repository.PokemonRepository;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.repository.PokemonDetails;
 import pl.sdaacademy.pokemonacademyapi.pokemon_details.service.PokemonDetailService;
 import pl.sdaacademy.pokemonacademyapi.pokemon_list_item.repository.PokemonList;
@@ -37,6 +41,8 @@ public class PokemonControllerTest {
     private PokemonController pokemonController;
     @Mock
     private PokemonDetails pokemonDetails;
+    @Mock
+    private PokemonRepository pokemonRepository;
 
     @BeforeEach
     void init() {
@@ -110,6 +116,14 @@ public class PokemonControllerTest {
 
     @Test
     public void getPokemonList() {
+        pokemonController =
+                new PokemonController(pokemonDetailService,pokemonListService,pokemonUserApiService);
+
+        Pageable pageable = PageRequest.of(2 - 1, 2);
+        when(pokemonRepository.findAll()).thenReturn(List.of()); //TODO List<Pokemon>
+        Page<Pokemon> pageItem = pokemonRepository.findAll(pageable);
+
+        pokemonController.getPokemonList(1,2);
     }
 
     @Test
