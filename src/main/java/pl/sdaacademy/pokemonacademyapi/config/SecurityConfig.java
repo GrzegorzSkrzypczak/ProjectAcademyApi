@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/pokemons").authenticated()
-                .antMatchers("/pokemons/list").authenticated()
+                .antMatchers("/pokemons").permitAll()
+                .antMatchers("/pokemons/list").permitAll()
                 .antMatchers("/pokemons/signup").permitAll();
         http.csrf().disable();
         http.cors();
